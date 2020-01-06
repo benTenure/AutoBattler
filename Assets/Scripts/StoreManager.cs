@@ -2,53 +2,54 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
     private const int INVENTORY_SIZE = 50;
+    private const int NUM_OF_SLOTS = 5;
     
     public ChampionInventory mainInventory;
     public ChampionInventory playerInventory;
 
+    [Header("Temporary Databases")]
+    public ChampionPool commonDatabase;
+    public ChampionPool uncommonDatabase;
+    public ChampionPool rareDatabase;
+    public ChampionPool epicDatabase;
+    public ChampionPool legendaryDatabase;
+    
+    // Apparently, it's not worth it to instantiate SO's at runtime since that defeats
+    // the purpose of using 'ScriptableObjects'. While it does look a little ugly in
+    // the editor, I suppose that doesn't matter once the game is built.
+    [Header("In-Game Champion Pools")]
     public ChampionPool commonPool;
     public ChampionPool uncommonPool;
     public ChampionPool rarePool;
     public ChampionPool epicPool;
     public ChampionPool legendaryPool;
     
+    [Header("")]
     public Player player;
-    
-    [Header("Champion Slot 1")]
-    public TextMeshPro name1;
-    public TextMeshPro cost1;
-    public Sprite splash1;
-    
-    [Header("Champion Slot 2")]
-    public TextMeshPro name2;
-    public TextMeshPro cost2;
-    public Sprite splash2;
-    
-    [Header("Champion Slot 3")]
-    public TextMeshPro name3;
-    public TextMeshPro cost3;
-    public Sprite splash3;
-    
-    [Header("Champion Slot 4")]
-    public TextMeshPro name4;
-    public TextMeshPro cost4;
-    public Sprite splash4;
-    
-    [Header("Champion Slot 5")]
-    public TextMeshPro name5;
-    public TextMeshPro cost5;
-    public Sprite splash5;
+
+    [Header("Champion Slots")]
+    public List<TextMeshProUGUI> buttonNames;
+    public List<TextMeshProUGUI> buttonCosts;
+    public List<Image> buttonSplashes;
 
     private void Start()
     {
+        // Only done for testing in-editor, not necessary for build
         mainInventory.inventory.Clear();
         playerInventory.inventory.Clear();
+        commonPool.pool.Clear();
+        uncommonPool.pool.Clear();
+        rarePool.pool.Clear();
+        epicPool.pool.Clear();
+        legendaryPool.pool.Clear();
+
         PopulateInventory();
-        //PopulateShop();
+        PopulateShop();
     }
 
     private bool TestRange(int test, int min, int max)
@@ -67,36 +68,39 @@ public class StoreManager : MonoBehaviour
             if (TestRange(choice, 1, 35))
             {
                 // Return 1-cost champ
-                mainInventory.AddChamp(commonPool.ReturnRandomObject());
+                commonPool.pool.Add(commonDatabase.ReturnRandomObject());
             }
             else if (TestRange(choice, 36, 65))
             {
                 // Return 2-cost champ
-                mainInventory.AddChamp(uncommonPool.ReturnRandomObject());
+                uncommonPool.pool.Add(uncommonDatabase.ReturnRandomObject());
             }
             else if (TestRange(choice, 66, 85))
             {
                 // Return 3-cost champ
-                mainInventory.AddChamp(rarePool.ReturnRandomObject());
+                rarePool.pool.Add(rareDatabase.ReturnRandomObject());
             }
             else if (TestRange(choice, 86, 95))
             {
                 // Return 4-cost champ
-                mainInventory.AddChamp(epicPool.ReturnRandomObject());
+                epicPool.pool.Add(epicDatabase.ReturnRandomObject());
             }
             else
             {
                 // Return 5 or greater cost champ
-                mainInventory.AddChamp(legendaryPool.ReturnRandomObject());
+                legendaryPool.pool.Add(legendaryDatabase.ReturnRandomObject());
             }
         }
     }
 
-    private void PopulateShop()
+    public void PopulateShop()
     {
         // Need to do this once for each champion slot in the shop
         for (var i = 0; i < 5; i++)
         {
+            // Uh oh
+            Champion champ;
+            
             // Find a random number
             var choice = Random.Range(1, 100);
 
@@ -104,32 +108,40 @@ public class StoreManager : MonoBehaviour
             if (TestRange(choice, 1, 35))
             {
                 // Return 1-cost champ
-                mainInventory.AddChamp(commonPool.ReturnRandomObject());
+                champ = commonPool.ReturnRandomObject();
             }
             else if (TestRange(choice, 36, 65))
             {
                 // Return 2-cost champ
-                mainInventory.AddChamp(uncommonPool.ReturnRandomObject());
+                champ = uncommonPool.ReturnRandomObject();
             }
             else if (TestRange(choice, 66, 85))
             {
                 // Return 3-cost champ
-                mainInventory.AddChamp(rarePool.ReturnRandomObject());
+                champ = rarePool.ReturnRandomObject();
             }
             else if (TestRange(choice, 86, 95))
             {
                 // Return 4-cost champ
-                mainInventory.AddChamp(epicPool.ReturnRandomObject());
+                champ = epicPool.ReturnRandomObject();
             }
             else
             {
                 // Return 5 or greater cost champ
-                mainInventory.AddChamp(legendaryPool.ReturnRandomObject());
+                champ = legendaryPool.ReturnRandomObject();
             }
-            
-            // Choose which pool to pull from
-            
-            // Change appropriate aspects of the champion slot that matches the current loop index
+
+            /*
+             * MAKE SURE TO CHANGE THE BOOLEAN ON THE CHAMP CHOSEN!!
+             *   - Pass champions by reference?
+             *   - Store the index that is used to get to the originally referenced champ?
+             *   - Why is passing ref's giving me so much trouble in C#??? I miss pointers...
+             */
+
+            // Change attributes of the button
+            buttonNames[i].text = champ.name;
+            buttonCosts[i].text = $"{champ.goldCost}";
+            buttonSplashes[i].sprite = champ.splashArt;
         }
     }
 }

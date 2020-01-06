@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d58e894e9efd646498fba65085b22ac2, type: 3}
-  m_Name: RareChampionPool
+  m_Script: {fileID: 11500000, guid: 75baec1dc43bbe943ad5a639a49dcc51, type: 3}
+  m_Name: Jax
   m_EditorClassIdentifier: 
-  pool: []
+  name: Jax
+  goldCost: 2
+  health: 600
+  attackDamage: 50
+  inPossession: 0
+  splashArt: {fileID: 21300000, guid: 99a0441a39a37fa4b8604d8cfa9e448c, type: 3}

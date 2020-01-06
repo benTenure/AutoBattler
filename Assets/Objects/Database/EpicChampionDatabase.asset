@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d58e894e9efd646498fba65085b22ac2, type: 3}
-  m_Name: RareChampionPool
+  m_Name: EpicChampionDatabase
   m_EditorClassIdentifier: 
-  pool: []
+  pool:
+  - {fileID: 11400000, guid: 19c87c83f5504d94b9b80452f0dfbe31, type: 2}
+  - {fileID: 11400000, guid: 0c0d9bb865832524e9d7622101a60cfd, type: 2}
+  - {fileID: 11400000, guid: 43cbb7adf4f2ae14280107a3d5ef6b9a, type: 2}

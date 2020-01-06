@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private const float StartTime = 1f;
+    private const float startTime = 1f;
     
     public FloatVariable timer;
     public TextMeshProUGUI timerText;
     
     private void Awake()
     {
-        timer.value = StartTime;
+        timer.value = startTime;
     }
     
     private void Update()
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            timer.value = StartTime;
+            timer.value = startTime;
         }
         
     }

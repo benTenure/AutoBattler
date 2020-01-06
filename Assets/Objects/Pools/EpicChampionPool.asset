@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58e894e9efd646498fba65085b22ac2, type: 3}
   m_Name: EpicChampionPool
   m_EditorClassIdentifier: 
-  pool:
-  - {fileID: 11400000, guid: 43cbb7adf4f2ae14280107a3d5ef6b9a, type: 2}
+  pool: []

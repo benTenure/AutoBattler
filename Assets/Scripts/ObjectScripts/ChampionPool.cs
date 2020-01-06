@@ -9,6 +9,6 @@ public class ChampionPool : ScriptableObject
 
     public Champion ReturnRandomObject()
     {
-        return pool[Random.Range(0, pool.Count - 1)];
+        return pool[Random.Range(0, pool.Count)];
     }
 }
